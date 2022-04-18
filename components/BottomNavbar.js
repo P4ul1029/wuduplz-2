@@ -3,8 +3,8 @@ import { View } from 'react-native';
 import { BottomNavigation, Text } from 'react-native-paper';
 
 import VideoFeed from '../screens/VideoFeed';
-import Explore from '../screens/Explore';
-import MyRequests from '../screens/MyRequests';
+import Explore from '../screens/explore/Explore';
+import MyRequests from '../screens/my_requests/MyRequests';
 import Profile from '../screens/Profile';
 
 const VideoFeedRoute = () => <VideoFeed/>

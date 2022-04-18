@@ -4,6 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { View, ActivityIndicator } from 'react-native';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './config/firebase';
+import { AuthenticatedUserProvider } from './contexts/AuthenticatedUserContext';
+import { useAuth } from './contexts/AuthenticatedUserContext';
 
 import Login from './screens/auth/Login';
 import Signup from './screens/auth/Signup';
@@ -11,17 +13,6 @@ import BottomNavbar from './components/BottomNavbar';
 import EditProfile from './screens/EditProfile';
 
 const Stack = createStackNavigator();
-const AuthenticatedUserContext = createContext({});
-
-const AuthenticatedUserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-
-  return (
-    <AuthenticatedUserContext.Provider value={{ user, setUser }}>
-      {children}
-    </AuthenticatedUserContext.Provider>
-  );
-};
 
 function AppStack() {
   return (
@@ -42,7 +33,7 @@ function AuthStack() {
 }
 
 function RootNavigator() {
-  const { user, setUser } = useContext(AuthenticatedUserContext);
+  const { user, setUser } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
