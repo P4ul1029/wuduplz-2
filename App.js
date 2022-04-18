@@ -8,6 +8,7 @@ import { auth } from './config/firebase';
 import Login from './screens/auth/Login';
 import Signup from './screens/auth/Signup';
 import BottomNavbar from './components/BottomNavbar';
+import EditProfile from './screens/EditProfile';
 
 const Stack = createStackNavigator();
 const AuthenticatedUserContext = createContext({});
@@ -26,6 +27,7 @@ function AppStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }} >
       <Stack.Screen name='BottomNavbar' component={BottomNavbar} />
+      <Stack.Screen name='EditProfile' component={EditProfile} />
     </Stack.Navigator>
   );
 }
