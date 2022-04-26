@@ -19,7 +19,6 @@ const Profile = () => {
   return (
     <View>
       <ProfileAppbar/>
-      <Text>Profile</Text>
     </View>
   )
 }

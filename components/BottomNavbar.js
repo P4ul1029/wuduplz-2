@@ -3,15 +3,15 @@ import { View } from 'react-native';
 import { BottomNavigation, Text } from 'react-native-paper';
 
 import VideoFeed from '../screens/VideoFeed';
-import Explore from '../screens/explore/Explore';
-import MyRequests from '../screens/my_requests/MyRequests';
+// import Explore from '../screens/explore/Explore';
+import Requests from '../screens/requests/Requests';
 import Profile from '../screens/Profile';
 
 const VideoFeedRoute = () => <VideoFeed/>
 
-const ExploreRoute = () => <Explore/>
+// const ExploreRoute = () => <Explore/>
 
-const MyRequestsRoute = () => <MyRequests/>
+const MyRequestsRoute = () => <Requests/>
 
 const ProfileRoute = () => <Profile/>
 
@@ -19,15 +19,15 @@ const BottomNavbar = () => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: 'videoFeed', title: 'Video Feed', icon: 'video' },
-    { key: 'explore', title: 'Explore', icon: 'feature-search-outline' },
-    { key: 'myRequests', title: 'My Requests', icon: 'message-video' },
+    // { key: 'explore', title: 'Explore', icon: 'feature-search-outline' },
+    { key: 'requests', title: 'Requests', icon: 'message-video' },
     { key: 'profile', title: 'Profile', icon: 'account' },
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
     videoFeed: VideoFeedRoute,
-    explore: ExploreRoute,
-    myRequests: MyRequestsRoute,
+    // explore: ExploreRoute,
+    requests: MyRequestsRoute,
     profile: ProfileRoute,
   });
 

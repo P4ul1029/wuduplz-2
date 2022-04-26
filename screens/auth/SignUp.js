@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/core'
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -37,42 +37,57 @@ const Signup = () => {
   };
 
   return (
-    <View>
+    <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <TextInput
         label='Username'
         value={username}
         onChangeText={email => setUsername(email)}
+        style={{width: '95%'}}
       />
       <TextInput
         label='First Name'
         value={firstName}
         onChangeText={firstName => setFirstName(firstName)}
+        style={styles.input}
       />
       <TextInput
         label='Last Name'
         value={lastName}
         onChangeText={lastName => setLastName(lastName)}
+        style={styles.input}
       />
       <TextInput
         label='Email'
         value={email}
         onChangeText={email => setEmail(email)}
+        style={styles.input}
       />
       <TextInput
         label='Password'
         value={password}
         onChangeText={password => setPassword(password)}
+        style={styles.input}
       />
-      <Button mode="contained" onPress={onHandleSignup}>
+      <Button mode="contained" onPress={onHandleSignup} style={styles.input}>
         Sign Up
       </Button>
-      <Button mode="outlined" onPress={() => navigation.navigate("Login")}>
+      <Button mode="outlined" onPress={() => navigation.navigate("Login")} style={styles.input}>
         Login
       </Button>
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 
 export default Signup
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  input: {
+    width: '95%',
+    marginTop: 10
+  }
+})

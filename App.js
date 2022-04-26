@@ -8,7 +8,7 @@ import { AuthenticatedUserProvider } from './contexts/AuthenticatedUserContext';
 import { useAuth } from './contexts/AuthenticatedUserContext';
 
 import Login from './screens/auth/Login';
-import Signup from './screens/auth/Signup';
+import Signup from './screens/auth/SignUp';
 import BottomNavbar from './components/BottomNavbar';
 import EditProfile from './screens/EditProfile';
 
