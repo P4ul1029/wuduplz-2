@@ -32,9 +32,9 @@ const Login = () => {
         value={password}
         onChangeText={password => setPassword(password)}
         style={styles.input}
-
+        secureTextEntry
       />
-      <Button mode="contained" onPress={onHandleLogin} style={styles.input}>
+      <Button mode="contained" onPress={onHandleLogin} style={styles.input} >
         Login
       </Button>
       <Button mode="outlined" onPress={() => navigation.navigate("Signup")} style={styles.input}>

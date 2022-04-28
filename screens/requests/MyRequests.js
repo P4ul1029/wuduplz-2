@@ -5,6 +5,7 @@ import { db } from '../../config/firebase';
 import uuid from 'react-native-uuid';
 import { useAuth } from '../../contexts/AuthenticatedUserContext';
 import React, { useState, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 const MyRequests = () => {
   const { user, setUser } = useAuth();
@@ -13,27 +14,31 @@ const MyRequests = () => {
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
 
+  const [username, setUsername] = useState('');
   const [userRequests, setUserRequests] = useState([]);
   const [requests, setRequests] = useState([]);
 
-  useEffect(() => {
-    populateRequests()
-  }, [userRequests])
+  const navigation = useNavigation();
 
   useEffect(() => {
-    fetchUserRequestIds()
-  }, [])
+    populateRequests();
+  }, [userRequests]);
 
-  const fetchUserRequestIds = () => {
+  useEffect(() => {
+    fetchUserRequestData();
+  }, []);
+
+  const fetchUserRequestData = () => {
     const dbRef = doc(db, 'users', email);
     getDoc(dbRef)
       .then((snapshot) => {
-        if (snapshot.exists && snapshot.data().requests) {
-          setUserRequests(snapshot.data().requests)
+        if (snapshot.exists) {
+          setUsername(snapshot.data().username);
+          snapshot.data().requests && setUserRequests(snapshot.data().requests);
         }
       })
       .catch((error) => console.log(error.message))
-  }
+  };
 
   const updateUserDoc = (requestId) => {
     const dbRef = doc(db, 'users', email);
@@ -41,30 +46,39 @@ const MyRequests = () => {
       'requests': [...userRequests, requestId]
     }
     setDoc(dbRef, myDoc, { merge: true })
-      .then(() => fetchUserRequestIds())
+      .then(() => fetchUserRequestData())
       .catch((error) => console.log(error.message))
-  }
+  };
 
   const createRequest = (caption) => {
     const requestId = uuid.v4();
     const dbRef = doc(db, 'requests', requestId);
     const myDoc = {
       'userEmail': email,
+      'username': username,
       'caption': caption
     }
     setDoc(dbRef, myDoc)
       .then(() => updateUserDoc(requestId))
       .catch((error) => console.log(error))
-  }
+  };
   
-  const Request = ({caption}) => {
+  const Request = (props) => {
     return(
     <Card style={{width: "95%", marginTop: 10}}>
-      <Card.Content>
-        <Paragraph style={{fontSize: 20}}>{caption}</Paragraph>
-      </Card.Content>
+      <Card.Title title={`@${username}`}/>
+        <Card.Content style={{ marginBottom: 5 }}>
+          <Paragraph style={{ fontSize: 17 }}>{props.caption}</Paragraph>
+        </Card.Content>
       <Card.Actions >
-        <Button icon="video" style={{justifyContent: 'center'}} mode="contained" >View Responses</Button>
+        <Button
+          icon="video"
+          style={{justifyContent: 'center'}}
+          mode="contained"
+          onPress={() => navigation.navigate('Responses', props)}
+        >
+          View Responses
+        </Button>
       </Card.Actions>
     </Card>
   )};
@@ -76,8 +90,8 @@ const MyRequests = () => {
       getDoc(dbRef)
         .then((snapshot) => {
           if (snapshot.exists) {
-            if (snapshot.data().userEmail === email) {
-              reqs.push(<Request caption={snapshot.data().caption}/>)
+            if (snapshot.data() && snapshot.data().userEmail === email) {
+              reqs.push(<Request caption={snapshot.data().caption} id={requestId}/>)
             }
             if (index + 1 == userRequests.length) {
               setRequests(reqs)
@@ -86,7 +100,7 @@ const MyRequests = () => {
         })
         .catch((error) => console.log(error.message))
     })
-  }
+  };
 
   const AddRequestModal = () => {
     const containerStyle = {backgroundColor: 'white', padding: 20};
@@ -101,6 +115,7 @@ const MyRequests = () => {
               onChangeText={text => setText(text)}
               multiline
               style={{height: 100}}
+              maxLength={150}
             />
             <Button
               icon="plus-circle-outline"

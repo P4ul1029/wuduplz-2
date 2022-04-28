@@ -23,7 +23,8 @@ const Signup = () => {
         'username': username,
         'firstName': firstName,
         'lastName': lastName,
-        'email': email
+        'email': email,
+        'password': password
       }
 
       setDoc(dbRef, myDoc)
@@ -41,7 +42,7 @@ const Signup = () => {
       <TextInput
         label='Username'
         value={username}
-        onChangeText={email => setUsername(email)}
+        onChangeText={username => setUsername(username)}
         style={{width: '95%'}}
       />
       <TextInput
@@ -67,6 +68,7 @@ const Signup = () => {
         value={password}
         onChangeText={password => setPassword(password)}
         style={styles.input}
+        secureTextEntry
       />
       <Button mode="contained" onPress={onHandleSignup} style={styles.input}>
         Sign Up

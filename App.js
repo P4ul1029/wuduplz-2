@@ -10,7 +10,10 @@ import { useAuth } from './contexts/AuthenticatedUserContext';
 import Login from './screens/auth/Login';
 import Signup from './screens/auth/SignUp';
 import BottomNavbar from './components/BottomNavbar';
-import EditProfile from './screens/EditProfile';
+import EditProfile from './screens/profile/EditProfile';
+import CameraScreen from './screens/camera/CameraScreen';
+import SaveVideo from './screens/camera/SaveVideo';
+import Responses from './screens/responses/Responses';
 
 const Stack = createStackNavigator();
 
@@ -19,6 +22,9 @@ function AppStack() {
     <Stack.Navigator screenOptions={{ headerShown: false }} >
       <Stack.Screen name='BottomNavbar' component={BottomNavbar} />
       <Stack.Screen name='EditProfile' component={EditProfile} />
+      <Stack.Screen name='CameraScreen' component={CameraScreen} />
+      <Stack.Screen name='SaveVideo' component={SaveVideo} />
+      <Stack.Screen name='Responses' component={Responses} />
     </Stack.Navigator>
   );
 }
